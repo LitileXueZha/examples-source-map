@@ -1,0 +1,38 @@
+{
+  "name": "examples-source-map",
+  "version": "1.0.0",
+  "description": "一些关于 source map 的例子",
+  "main": "index.js",
+  "scripts": {
+    "exp01:uglify": "uglifyjs --compress --mangle --source-map --output dist/index.min.js -- example01-uglifyjs/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LitileXueZha/examples-source-map.git"
+  },
+  "keywords": [
+    "source",
+    "map",
+    "example",
+    "course"
+  ],
+  "author": "LitileXueZha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LitileXueZha/examples-source-map/issues"
+  },
+  "homepage": "https://github.com/LitileXueZha/examples-source-map#readme",
+  "dependencies": {
+    "commitizen": "^4.0.3",
+    "uglify-es": "^3.3.9"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "3.1.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
