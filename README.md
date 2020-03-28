@@ -2,7 +2,7 @@
 
 一些关于 source map 的例子
 
-# uglify-js
+## uglify-js
 
 运行命令 `npm run exp01:uglify`，在 dist 目录生成压缩文件与 source map。
 
@@ -14,7 +14,7 @@
 
 给 `index.js.map` 添加 `sourceRoot: '../'` 定位到正确的源文件地址。
 
-# gulp
+## gulp
 
 运行命令 `npm run exp02:gulp`，可以看到 dist 目录生成了编译过的 es5 压缩文件及 source map。
 
