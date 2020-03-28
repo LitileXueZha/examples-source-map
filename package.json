@@ -4,7 +4,8 @@
   "description": "一些关于 source map 的例子",
   "main": "index.js",
   "scripts": {
-    "exp01:uglify": "uglifyjs --compress --mangle --source-map --output dist/index.min.js -- example01-uglifyjs/index.js",
+    "exp01:uglify": "uglifyjs --compress --mangle --source-map --output dist/index.js -- example01-uglifyjs/index.js",
+    "exp02:gulp": "gulp -f example02-gulp/gulpfile.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,7 +25,14 @@
   },
   "homepage": "https://github.com/LitileXueZha/examples-source-map#readme",
   "dependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
     "commitizen": "^4.0.3",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-cli": "^2.2.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
     "uglify-es": "^3.3.9"
   },
   "devDependencies": {
