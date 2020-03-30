@@ -9,6 +9,7 @@
     "exp03:ts": "yarn exp03:ts:compile && yarn exp03:ts:uglify",
     "exp03:ts:compile": "tsc -p example03-typescript",
     "exp03:ts:uglify": "uglifyjs --compress --mangle --source-map \"content=dist/index.js.map,url=index.js.map\" --output dist/index.js -- dist/index.js",
+    "exp04:webpack": "webpack --config example04-webpack/webpack.config.js --context example04-webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -36,8 +37,11 @@
     "gulp-cli": "^2.2.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
+    "lodash": "^4.17.15",
     "typescript": "^3.8.3",
-    "uglify-es": "^3.3.9"
+    "uglify-es": "^3.3.9",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
     "cz-conventional-changelog": "3.1.0"
