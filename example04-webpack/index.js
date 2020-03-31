@@ -1,10 +1,11 @@
-import _ from 'lodash';
+import { join } from 'lodash-es';
+import 'regenerator-runtime/runtime';
 
-window.addEventListener('load', function load() {
+window.addEventListener('load', async function load() {
     console.log('load');
 
-    document.body.addEventListener('click', () => {
-        const msg = _.join(['example04', 'webpack'], '-');
+    document.body.addEventListener('click', async () => {
+        const msg = join(['example04', 'webpack'], '-');
 
         console.warn(msg);
     });
