@@ -1,6 +1,8 @@
 import { join } from 'lodash-es';
 import 'regenerator-runtime/runtime';
 
+import './index.less';
+
 window.addEventListener('load', async function load() {
     console.log('load');
 
