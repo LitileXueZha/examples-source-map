@@ -10,6 +10,7 @@
     "exp03:ts:compile": "tsc -p example03-typescript",
     "exp03:ts:uglify": "uglifyjs --compress --mangle --source-map \"content=dist/index.js.map,url=index.js.map\" --output dist/index.js -- dist/index.js",
     "exp04:webpack": "webpack --config example04-webpack/webpack.config.js --context example04-webpack",
+    "exp05:webpack-dev": "webpack-dev-server --config example05-webpack-dev/webpack.config.js --context example05-webpack-dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -31,6 +32,8 @@
   "dependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "antd": "^4.1.0",
     "babel-loader": "^8.1.0",
     "commitizen": "^4.0.3",
     "css-loader": "^3.4.2",
@@ -39,17 +42,22 @@
     "gulp-cli": "^2.2.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
+    "html-webpack-plugin": "^4.0.3",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "lodash-es": "^4.17.15",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "regenerator-runtime": "^0.13.5",
+    "style-loader": "^1.1.3",
     "typescript": "^3.8.3",
     "uglify-es": "^3.3.9",
     "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   },
   "devDependencies": {
     "cz-conventional-changelog": "3.1.0"
