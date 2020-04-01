@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserWebpackPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
     mode: 'production',
@@ -14,11 +16,7 @@ module.exports = {
         // 默认是 'webpack://[namespace]/[resource-path]?[loaders]'
         // 在 Chrome DevTools 的 Sources 面板看到了 webpack:// 协议，
         // 不过它只是个地址
-        // devtoolModuleFilenameTemplate: 'file://[absolute-resource-path]',
-        devtoolModuleFilenameTemplate(info) {
-            console.log(info);
-            return info.resourcePath;
-        },
+        devtoolModuleFilenameTemplate: '../example04-webpack/[resource-path]',
         // devtoolModuleFilenameTemplate: 'litilexuezha://[namespace]/[resource-path]?[loaders]',
     },
     module: {
@@ -38,7 +36,7 @@ module.exports = {
                     {
                         loader: 'css-loader',
                         options: {
-                            // sourceMap: true,
+                            sourceMap: true,
                         },
                     }, {
                         loader: 'postcss-loader',
@@ -58,4 +56,14 @@ module.exports = {
     plugins: [
         new MiniCssExtractPlugin({ filename: 'index.css' }),
     ],
+    optimization: {
+        minimizer: [
+            new TerserWebpackPlugin({ sourceMap: true }),
+            new OptimizeCSSAssetsPlugin({
+                cssProcessorOptions: {
+                    map: { inline: false, annotation: true, sourcesContent: false },
+                },
+            }),
+        ],
+    },
 };
