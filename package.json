@@ -11,6 +11,8 @@
     "exp03:ts:uglify": "uglifyjs --compress --mangle --source-map \"content=dist/index.js.map,url=index.js.map\" --output dist/index.js -- dist/index.js",
     "exp04:webpack": "webpack --config example04-webpack/webpack.config.js --context example04-webpack",
     "exp05:webpack-dev": "webpack-dev-server --config example05-webpack-dev/webpack.config.js --context example05-webpack-dev",
+    "exp06:prod": "webpack --config example06-production/webpack.config.js --context example06-production",
+    "exp06:server": "node example06-production/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -37,6 +39,7 @@
     "babel-loader": "^8.1.0",
     "commitizen": "^4.0.3",
     "css-loader": "^3.4.2",
+    "express": "^4.17.1",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-cli": "^2.2.0",
@@ -47,6 +50,7 @@
     "less-loader": "^5.0.0",
     "lodash-es": "^4.17.15",
     "mini-css-extract-plugin": "^0.9.0",
+    "morgan": "^1.10.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
     "react": "^16.13.1",
@@ -56,6 +60,7 @@
     "typescript": "^3.8.3",
     "uglify-es": "^3.3.9",
     "webpack": "^4.42.1",
+    "webpack-bundle-analyzer": "^3.6.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
