@@ -20,9 +20,11 @@ export default function App() {
 
     return (
         <div className="container">
-            Examples Source Map
-            <StackInput />
-            <p><a href="#">logger</a></p>
+            <div style={{ position: 'sticky', top: 10, background: '#fff', zIndex: 2 }}>
+                Examples Source Map
+                <StackInput />
+                <p><a href="#">logger</a></p>
+            </div>
             <Logger />
         </div>
     );
