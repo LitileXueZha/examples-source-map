@@ -3,6 +3,7 @@ import { join } from 'lodash-es';
 
 import './index.less';
 import StackInput from './StackInput.jsx';
+import Logger from './Logger.jsx';
 
 export default function App() {
     useEffect(() => {
@@ -13,7 +14,7 @@ export default function App() {
             const project = 'webpack-dev';
             const msg = join([namespace, project], '-');
 
-            console.warn(msga);
+            console.warn(msg);
         });
     }, []);
 
@@ -21,6 +22,8 @@ export default function App() {
         <div className="container">
             Examples Source Map
             <StackInput />
+            <p><a href="#">logger</a></p>
+            <Logger />
         </div>
     );
 }

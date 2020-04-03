@@ -1,22 +1,72 @@
 const express = require('express');
+const path = require('path');
+const fs = require('fs');
 const morgan = require('morgan');
+const compression = require('compression');
+const EventEmitter = require('events');
+const { SourceMapConsumer } = require('source-map');
 const app = express();
+const appEvent = new EventEmitter();
+const reg = /http:\/\/localhost:9009(.+\.js):(\d+):(\d+)/;
+const customEvent = {
+    func: () => {},
+    on(func) { this.func = func },
+    emit(data) { this.func(data) },
+};
+const rawSourceMap = {};
 
+app.use(compression());
+// app.use(morgan('dev'));
 app.use(express.static('dist'));
-app.use(morgan('dev'));
+app.use(express.text());
 app.listen(9009, () => {
-    console.log('系统启动成功:   http://localhost:9009');
-    console.log('日志记录请访问: http://localhot:9009/logger/\n');
+    console.log('系统启动成功: http://localhost:9009\n');
 });
 
-app.use('/logger', (req, res) => {
-    res.send('<script>const sse = new EventSource("/stream")</script>');
+app.post('/logger', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    customEvent.emit(req.body);
+    res.end();
 });
 
-app.use('/stream', (req, res) => {
-    res.append('Content-Type', 'text/event-stream');
-    setInterval(() => {
-        res.write("event: connecttime\n");
-        res.write("data: " + (new Date()) + "\n\n");
-    }, 1500);
+app.get('/stream', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+
+    res.write('event: init\n');
+    res.write(`data: Initialize\n\n`);
+    res.flush();
+
+    customEvent.on((error) => {
+        const [,filename, lineno, colno] = reg.exec(error);
+        const generatedPosition = {
+            line: +lineno,
+            column: +colno,
+        };
+        const mapName = path.join(__dirname, '../dist', filename+'.map');
+        
+        if (!rawSourceMap[mapName]) {
+            rawSourceMap[mapName] = JSON.parse(fs.readFileSync(mapName));
+        }
+        // console.log(rawSourceMap);
+
+        SourceMapConsumer.with(rawSourceMap[mapName], null, (consumer) => {
+            const { name, line, column, source } = consumer.originalPositionFor(generatedPosition);
+            const content = consumer.sourceContentFor(source);
+            const data = {
+                error,
+                logger: {
+                    name,
+                    line,
+                    column,
+                    content,
+                },
+            };
+            
+            res.write('event: message\n');
+            res.write(`data: ${JSON.stringify(data)}\n\n`);
+            res.flush();
+        });
+    });
 });

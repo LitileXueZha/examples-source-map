@@ -8,4 +8,20 @@ const $rootEl = document.getElementById('root');
 
 ReactDOM.render(<App />, $rootEl);
 
-window.addEventListener('error', (e) => {})
+// 错误上报
+window.addEventListener('error', (e) => {
+    fetch('/logger', {
+        method: 'POST',
+        body: e.error ? e.error.stack : e,
+    });
+});
+window.addEventListener('unhandledrejection', (e) => {
+    if (String(e.reason) === 'TypeError: Failed to fetch') {
+        return;
+    }
+
+    fetch('/logger', {
+        method: 'POST',
+        body: e.reason.stack,
+    });
+});

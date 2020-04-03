@@ -8,14 +8,17 @@ export default function StackInput() {
     //     console.log(e.target.value);
     // }, 1500);
     const onChange = (e) => {
-        console.error(e.target.value);
+        console.log(e.target.value);
+    };
+    const onPressEnter = () => {
+        console.log(zzz);
     };
 
     useEffect(() => {
-        
+        Promise.resolve().then(() => console.log(xxx));
     }, []);
 
     return (
-        <Input onChange={onChange} className="input" placeholder="请输入" prefix="￥" />
+        <Input onChange={onChange} className="input" placeholder="请输入" prefix="￥" onPressEnter={onPressEnter} />
     );
 }

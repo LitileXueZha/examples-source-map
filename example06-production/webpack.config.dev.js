@@ -1,19 +1,20 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserWebpackPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
-    mode: 'production',
+    mode: 'development',
     entry: './index.js',
+    stats: 'minimal',
     output: {
-        filename: 'js/[name]-[contenthash].js',
+        filename: 'index.js',
         path: path.resolve(__dirname, '../dist'),
     },
-    devtool: 'hidden-source-map',
+    devServer: {
+        port: 9006,
+        hot: true,
+        // contentBase: './example05-webpack-dev',
+    },
     module: {
         rules: [
             {
@@ -27,7 +28,7 @@ module.exports = {
             }, {
                 test: /\.less$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    'style-loader',
                     {
                         loader: 'css-loader',
                         options: {
@@ -48,7 +49,7 @@ module.exports = {
             }, {
                 test: /\.css$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    'style-loader',
                     {
                         loader: 'css-loader',
                         options: { sourceMap: true },
@@ -58,34 +59,6 @@ module.exports = {
         ],
     },
     plugins: [
-        new MiniCssExtractPlugin({ filename: 'css/[name]-[contenthash].css' }),
         new HtmlWebpackPlugin({ template: './index.html' }),
-        // new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: false }),
     ],
-    optimization: {
-        minimizer: [
-            new TerserWebpackPlugin({ sourceMap: true }),
-            new OptimizeCSSAssetsPlugin({
-                cssProcessorOptions: {
-                    map: { inline: false, annotation: true, sourcesContent: false },
-                },
-            }),
-        ],
-        runtimeChunk: { name: 'main' },
-        splitChunks: {
-            minChunks: 1,
-            cacheGroups: {
-                vendors: {
-                    chunks: 'all',
-                    test: /\/node_modules\//,
-                    priority: -10,
-                },
-                antd: {
-                    chunks: 'all',
-                    test: /(\/antd\/)|(ant-design)/,
-                    priority: -9,
-                },
-            },
-        },
-    },
 };
