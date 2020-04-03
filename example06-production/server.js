@@ -14,6 +14,7 @@ const customEvent = {
     emit(data) { this.func(data) },
 };
 const rawSourceMap = {};
+const rawDev = {};
 
 app.use(compression());
 // app.use(morgan('dev'));
@@ -39,17 +40,40 @@ app.get('/stream', (req, res) => {
     res.flush();
 
     customEvent.on((error) => {
-        const [,filename, lineno, colno] = reg.exec(error);
+        const result = reg.exec(error);
+
+        if (!result) {
+            // dev 下配置
+            const [,filename, lineno, colno] = /webpack:\/\/\/(.+\.jsx?)\?:(\d+):(\d+)/.exec(error);
+
+            if (!rawDev[filename]) {
+                rawDev[filename] = fs.readFileSync(path.join(__dirname, filename)).toString();
+            }
+            const data = {
+                error,
+                logger: {
+                    line: +lineno,
+                    column: +colno,
+                    content: rawDev[filename],
+                },
+            };
+            
+            res.write('event: message\n');
+            res.write(`data: ${JSON.stringify(data)}\n\n`);
+            res.flush();
+            return;
+        }
+
+        const [,filename, lineno, colno] = result;
         const generatedPosition = {
             line: +lineno,
             column: +colno,
         };
-        const mapName = path.join(__dirname, '../dist', filename+'.map');
+        const mapName = path.join(__dirname, '../dist', filename + '.map');
         
         if (!rawSourceMap[mapName]) {
             rawSourceMap[mapName] = JSON.parse(fs.readFileSync(mapName));
         }
-        // console.log(rawSourceMap);
 
         SourceMapConsumer.with(rawSourceMap[mapName], null, (consumer) => {
             const { name, line, column, source } = consumer.originalPositionFor(generatedPosition);

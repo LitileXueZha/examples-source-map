@@ -60,5 +60,6 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({ template: './index.html' }),
+        new webpack.DefinePlugin({ API: JSON.stringify('http://localhost:9009') }),
     ],
 };

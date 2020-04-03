@@ -10,7 +10,7 @@ ReactDOM.render(<App />, $rootEl);
 
 // 错误上报
 window.addEventListener('error', (e) => {
-    fetch('/logger', {
+    fetch(API + '/logger', {
         method: 'POST',
         body: e.error ? e.error.stack : e,
     });
@@ -20,7 +20,7 @@ window.addEventListener('unhandledrejection', (e) => {
         return;
     }
 
-    fetch('/logger', {
+    fetch(API + '/logger', {
         method: 'POST',
         body: e.reason.stack,
     });

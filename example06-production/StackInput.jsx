@@ -19,6 +19,6 @@ export default function StackInput() {
     }, []);
 
     return (
-        <Input onChange={onChange} className="input" placeholder="请输入" prefix="￥" onPressEnter={onPressEnter} />
+        <Input onChange={onChange} className="input" placeholder="请输入" prefix="¥" onPressEnter={onPressEnter} />
     );
 }

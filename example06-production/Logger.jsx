@@ -12,13 +12,13 @@ export default class Logger extends React.Component {
             mapList: [],
         };
 
-        this.sse = new EventSource('/stream');
+        this.sse = new EventSource(API + '/stream');
         this.sse.addEventListener('message', (e) => {
             try {
-                const { error, stack } = JSON.parse(e.data);
+                const { error, logger } = JSON.parse(e.data);
                 this.setState({
                     loggerList: [...this.state.loggerList, error],
-                    mapList: [...this.state.mapList, JSON.stringify(stack, null, 4)],
+                    mapList: [...this.state.mapList, logger],
                 });
             } catch (e) {
 
@@ -31,19 +31,32 @@ export default class Logger extends React.Component {
 
         return (
             <>
-            <Row>
+            <Row style={{ fontFamily: 'Consolas, Menlo' }}>
                 <Col span={12}>
                     <b>logger</b>
                     <List
                         dataSource={loggerList}
-                        renderItem={item => <List.Item style={{ whiteSpace: 'pre', overflowX: 'scroll' }}>{item}</List.Item>}
+                        renderItem={item => <List.Item style={{ whiteSpace: 'pre', overflowX: 'auto' }}>{item}</List.Item>}
                     />
                 </Col>
                 <Col span={12}>
                     <b>logger source map result</b>
                     <List
                         dataSource={mapList}
-                        renderItem={item => <List.Item style={{ whiteSpace: 'pre', overflowX: 'scroll' }}>{item}</List.Item>}
+                        renderItem={item => (
+                            <List.Item style={{ whiteSpace: 'pre', overflowX: 'auto' }}>
+                                {item && (
+                                    <ol style={{ width: '100%' }} start={item.line - 4}>
+                                        {item.content.split('\n').map((text, i) => {
+                                            if (Math.abs(item.line - i) > 5) return null;
+                                            const style = item.line === i + 1 ? { background: 'yellow' } : null;
+                                            return <li style={style}>{text}</li>;
+                                        })}
+                                    </ol>
+                                    // <pre>{item.content}</pre>
+                                )}
+                            </List.Item>
+                        )}
                     />
                 </Col>
             </Row>

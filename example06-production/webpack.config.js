@@ -18,6 +18,7 @@ module.exports = {
         rules: [
             {
                 test: /\.jsx?$/,
+                exclude: /node_modules/,
                 use: [{
                     loader: 'babel-loader',
                     options: {
@@ -61,6 +62,7 @@ module.exports = {
         new MiniCssExtractPlugin({ filename: 'css/[name]-[contenthash].css' }),
         new HtmlWebpackPlugin({ template: './index.html' }),
         // new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: false }),
+        new webpack.DefinePlugin({ API: JSON.stringify('') }),
     ],
     optimization: {
         minimizer: [
@@ -77,12 +79,12 @@ module.exports = {
             cacheGroups: {
                 vendors: {
                     chunks: 'all',
-                    test: /\/node_modules\//,
+                    test: /[\/\\]node_modules[\/\\]/,
                     priority: -10,
                 },
                 antd: {
                     chunks: 'all',
-                    test: /(\/antd\/)|(ant-design)/,
+                    test: /([\/\\]antd[\/\\])|(ant-design)/,
                     priority: -9,
                 },
             },
