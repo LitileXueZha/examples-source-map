@@ -10,8 +10,8 @@ export default function StackInput() {
     const onChange = (e) => {
         console.log(e.target.value);
     };
-    const onPressEnter = () => {
-        console.log(zzz);
+    const onPressEnter = (e) => {
+        throw new SyntaxError(`输错了>>${e.target.value}<<`);
     };
 
     useEffect(() => {
