@@ -3,6 +3,7 @@ import { Row, Col, List } from 'antd';
 import 'antd/es/row/style/css';
 import 'antd/es/col/style/css';
 import 'antd/es/list/style/css';
+import TracebackJS from 'traceback.js';
 
 export default class Logger extends React.Component {
     constructor(props) {
@@ -46,14 +47,14 @@ export default class Logger extends React.Component {
                         renderItem={item => (
                             <List.Item style={{ whiteSpace: 'pre', overflowX: 'auto' }}>
                                 {item && (
-                                    <ol style={{ width: '100%' }} start={item.line - 4}>
-                                        {item.content.split('\n').map((text, i) => {
-                                            if (Math.abs(item.line - i) > 5) return null;
-                                            const style = item.line === i + 1 ? { background: 'yellow' } : null;
-                                            return <li style={style}>{text}</li>;
-                                        })}
-                                    </ol>
-                                    // <pre>{item.content}</pre>
+                                    // <ol style={{ width: '100%' }} start={item.line - 4}>
+                                    //     {item.content.split('\n').map((text, i) => {
+                                    //         if (Math.abs(item.line - i) > 5) return null;
+                                    //         const style = item.line === i + 1 ? { background: 'yellow' } : null;
+                                    //         return <li style={style}>{text}</li>;
+                                    //     })}
+                                    // </ol>
+                                    <div style={{ width: '100%' }} dangerouslySetInnerHTML={{ __html: TracebackJS.renderToString(item.content, { highlightRow: item.line }) }}></div>
                                 )}
                             </List.Item>
                         )}

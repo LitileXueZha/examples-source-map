@@ -8111,6 +8111,11 @@ tough-cookie@~2.5.0:
     psl "^1.1.28"
     punycode "^2.1.1"
 
+traceback.js@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/traceback.js/-/traceback.js-0.1.2.tgz#ae54b491d2dce0e43a00cc17a88e71cd45e23095"
+  integrity sha512-A8szFqr7n2/6csB0RH322ihMKnjwONPMCs8203IrvN2HuceiSVwgi2eotqcfRE+529tLryhPVWZ+54b3AC5vkw==
+
 tryer@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/tryer/download/tryer-1.0.1.tgz#f2c85406800b9b0f74c9f7465b81eaad241252f8"
